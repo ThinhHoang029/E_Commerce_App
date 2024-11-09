@@ -36,3 +36,5 @@ flutter:
   assets:
     - assets/
     - assets/images/
+    - assets/applepay.json
+    - assets/gpay.json

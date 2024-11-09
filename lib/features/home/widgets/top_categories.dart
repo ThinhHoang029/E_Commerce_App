@@ -3,7 +3,7 @@ import 'package:commerce_flutter_app/features/home/screens/category_deals_screen
 import 'package:flutter/material.dart';
 
 class TopCategories extends StatelessWidget {
-  const TopCategories({Key? key}) : super(key: key);
+  const TopCategories({super.key});
 
   void navigateToCategoryPage(BuildContext context, String category) {
     Navigator.pushNamed(context, CategoryDealsScreen.routeName,

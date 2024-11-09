@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CartSubtotal extends StatelessWidget {
-  const CartSubtotal({Key? key}) : super(key: key);
+  const CartSubtotal({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class CartSubtotal extends StatelessWidget {
             ),
           ),
           Text(
-            '\$$sum',
+            '${sum} VND',
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,

@@ -5,7 +5,7 @@ import 'package:commerce_flutter_app/models/product.dart';
 import 'package:flutter/material.dart';
 
 class DealOfDay extends StatefulWidget {
-  const DealOfDay({Key? key}) : super(key: key);
+  const DealOfDay({super.key});
 
   @override
   State<DealOfDay> createState() => _DealOfDayState();
@@ -56,14 +56,6 @@ class _DealOfDayState extends State<DealOfDay> {
                       product!.images[0],
                       height: 235,
                       fit: BoxFit.fitHeight,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.only(left: 15),
-                      alignment: Alignment.topLeft,
-                      child: const Text(
-                        '\$100',
-                        style: TextStyle(fontSize: 18),
-                      ),
                     ),
                     Container(
                       alignment: Alignment.topLeft,

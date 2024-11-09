@@ -6,14 +6,21 @@ import 'package:commerce_flutter_app/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:pay/pay.dart';
 import 'package:provider/provider.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
+
+Future<PaymentConfiguration> _loadPaymentConfiguration(String assetPath) async {
+  final String configString = await rootBundle.loadString(assetPath);
+  return PaymentConfiguration.fromJsonString(configString);
+}
 
 class AddressScreen extends StatefulWidget {
   static const String routeName = '/address';
   final String totalAmount;
   const AddressScreen({
-    Key? key,
+    super.key,
     required this.totalAmount,
-  }) : super(key: key);
+  });
 
   @override
   State<AddressScreen> createState() => _AddressScreenState();
@@ -30,6 +37,9 @@ class _AddressScreenState extends State<AddressScreen> {
   List<PaymentItem> paymentItems = [];
   final AddressServices addressServices = AddressServices();
 
+  late Future<PaymentConfiguration> applePayConfig;
+  late Future<PaymentConfiguration> googlePayConfig;
+
   @override
   void initState() {
     super.initState();
@@ -40,6 +50,10 @@ class _AddressScreenState extends State<AddressScreen> {
         status: PaymentItemStatus.final_price,
       ),
     );
+
+    // Tải cấu hình thanh toán từ file JSON
+    applePayConfig = _loadPaymentConfiguration('assets/applepay.json');
+    googlePayConfig = _loadPaymentConfiguration('assets/gpay.json');
   }
 
   @override
@@ -50,6 +64,8 @@ class _AddressScreenState extends State<AddressScreen> {
     pincodeController.dispose();
     cityController.dispose();
   }
+
+  // Các hàm khác như onApplePayResult, onGooglePayResult và payPressed
 
   void onApplePayResult(res) {
     if (Provider.of<UserProvider>(context, listen: false)
@@ -159,12 +175,12 @@ class _AddressScreenState extends State<AddressScreen> {
                   children: [
                     CustomTextField(
                       controller: flatBuildingController,
-                      hintText: 'Flat, House no, Building',
+                      hintText: 'Căn hộ, Nhà số, Tòa nhà',
                     ),
                     const SizedBox(height: 10),
                     CustomTextField(
                       controller: areaController,
-                      hintText: 'Area, Street',
+                      hintText: 'Khu vực, Đường',
                     ),
                     const SizedBox(height: 10),
                     CustomTextField(
@@ -174,36 +190,50 @@ class _AddressScreenState extends State<AddressScreen> {
                     const SizedBox(height: 10),
                     CustomTextField(
                       controller: cityController,
-                      hintText: 'Town/City',
+                      hintText: 'Thành phố',
                     ),
                     const SizedBox(height: 10),
                   ],
                 ),
               ),
-              ApplePayButton(
-                width: double.infinity,
-                style: ApplePayButtonStyle.whiteOutline,
-                type: ApplePayButtonType.buy,
-                paymentConfigurationAsset: 'applepay.json',
-                onPaymentResult: onApplePayResult,
-                paymentItems: paymentItems,
-                margin: const EdgeInsets.only(top: 15),
-                height: 50,
-                onPressed: () => payPressed(address),
+              FutureBuilder<PaymentConfiguration>(
+                future: applePayConfig,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData) {
+                    return ApplePayButton(
+                      paymentConfiguration: snapshot.data,
+                      onPaymentResult: onApplePayResult,
+                      paymentItems: paymentItems,
+                      width: double.infinity,
+                      style: ApplePayButtonStyle.whiteOutline,
+                      type: ApplePayButtonType.buy,
+                      onPressed: () => payPressed(address),
+                    );
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                },
               ),
               const SizedBox(height: 10),
-              GooglePayButton(
-                onPressed: () => payPressed(address),
-                paymentConfigurationAsset: 'gpay.json',
-                onPaymentResult: onGooglePayResult,
-                paymentItems: paymentItems,
-                height: 50,
-                type:
-                    GooglePayButtonType.buy, // Giữ lại kiểu đã được định nghĩa
-                margin: const EdgeInsets.only(top: 15),
-                loadingIndicator: const Center(
-                  child: CircularProgressIndicator(),
-                ),
+              FutureBuilder<PaymentConfiguration>(
+                future: googlePayConfig,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData) {
+                    return GooglePayButton(
+                      paymentConfiguration: snapshot.data,
+                      onPaymentResult: onGooglePayResult,
+                      paymentItems: paymentItems,
+                      width: double.infinity,
+                      type: GooglePayButtonType.buy,
+                      onPressed: () => payPressed(address),
+                      loadingIndicator: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                },
               ),
             ],
           ),

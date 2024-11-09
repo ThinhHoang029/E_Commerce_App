@@ -3,7 +3,7 @@ import 'package:commerce_flutter_app/features/account/widgets/account_button.dar
 import 'package:flutter/material.dart';
 
 class TopButtons extends StatelessWidget {
-  const TopButtons({Key? key}) : super(key: key);
+  const TopButtons({super.key});
 
   @override
   Widget build(BuildContext context) {

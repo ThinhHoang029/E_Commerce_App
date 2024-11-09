@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 class SearchedProduct extends StatelessWidget {
   final Product product;
   const SearchedProduct({
-    Key? key,
+    super.key,
     required this.product,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +57,7 @@ class SearchedProduct extends StatelessWidget {
                     width: 235,
                     padding: const EdgeInsets.only(left: 10, top: 5),
                     child: Text(
-                      '\$${product.price}',
+                      '${product.price} VND',
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

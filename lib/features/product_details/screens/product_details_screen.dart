@@ -15,9 +15,9 @@ class ProductDetailScreen extends StatefulWidget {
   static const String routeName = '/product-details';
   final Product product;
   const ProductDetailScreen({
-    Key? key,
+    super.key,
     required this.product,
-  }) : super(key: key);
+  });
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -195,7 +195,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ),
                   children: [
                     TextSpan(
-                      text: '\$${widget.product.price}',
+                      text: '${widget.product.price} VND',
                       style: const TextStyle(
                         fontSize: 22,
                         color: Colors.red,

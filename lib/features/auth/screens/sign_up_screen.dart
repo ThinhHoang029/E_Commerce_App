@@ -5,6 +5,8 @@ import 'package:commerce_flutter_app/constants/global_variables.dart';
 import 'package:commerce_flutter_app/features/auth/services/auth_service.dart';
 
 class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
+
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -37,9 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Đăng Ký"),
-        backgroundColor: Colors.blue.shade900,
-      ),
+          title: Text("Đăng Ký"), backgroundColor: Colors.lightBlue.shade400),
       body: Container(
         width: double.infinity,
         height: MediaQuery.of(context).size.height,
@@ -48,9 +48,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.blue.shade900,
-              Colors.blue.shade800,
-              Colors.blue.shade400,
+              Colors.lightBlue.shade400, // Sáng hơn màu lightBlue.shade900
+              Colors.lightBlue.shade200, // Sáng hơn màu lightBlue.shade700
+              Colors.lightBlue.shade50, // Sáng hơn màu lightBlue.shade400
             ],
           ),
         ),
@@ -123,7 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Text(
           "Đã có tài khoản? Đăng nhập",
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.orange,
             decoration: TextDecoration.underline,
             fontSize: 16,
           ),

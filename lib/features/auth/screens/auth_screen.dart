@@ -12,7 +12,7 @@ enum Auth {
 
 class AuthScreen extends StatefulWidget {
   static const String routeName = '/auth-screen';
-  const AuthScreen({Key? key}) : super(key: key);
+  const AuthScreen({super.key});
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -92,13 +92,13 @@ class _AuthScreenState extends State<AuthScreen> {
                       opacity: 1.0,
                       child: Text(
                         _auth == Auth.signup
-                            ? "Đăng Nhập"
-                            : "Đăng Kí", // Đoạn này không thay đổi
+                            ? "Đăng Kí"
+                            : "Đăng Nhập", // Đoạn này không thay đổi
                         style: TextStyle(color: Colors.white, fontSize: 40),
                       ),
                     ),
-                    SizedBox(height: 10),
-                    AnimatedOpacity(
+                    const SizedBox(height: 10),
+                    const AnimatedOpacity(
                       duration: Duration(milliseconds: 1300),
                       opacity: 1.0,
                       child: Text(
@@ -109,7 +109,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -179,9 +179,9 @@ class _AuthScreenState extends State<AuthScreen> {
                             ],
                           ),
                         ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       AnimatedOpacity(
-                        duration: Duration(milliseconds: 1600),
+                        duration: const Duration(milliseconds: 1600),
                         opacity: 1.0,
                         child: GestureDetector(
                           onTap: () {
@@ -192,7 +192,7 @@ class _AuthScreenState extends State<AuthScreen> {
                                   builder: (context) => SignUpScreen()),
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             "Chưa có tài khoản? Đăng ký ngay",
                             style: TextStyle(
                               color: Colors.orange,
